@@ -12,33 +12,6 @@ def get_db_connection():
     conn.row_factory = sqlite3.Row
     return conn
 
-def initialize_database():
-    """Create the necessary tables if they don't already exist."""
-    if not os.path.exists(DB_FILE):
-        conn = get_db_connection()
-        # Create the flashcards table
-        conn.execute('''
-            CREATE TABLE IF NOT EXISTS flashcards (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                question TEXT NOT NULL,
-                answer TEXT NOT NULL
-            )
-        ''')
-        # Create the users table
-        conn.execute('''
-            CREATE TABLE IF NOT EXISTS users (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                username TEXT UNIQUE NOT NULL,
-                password TEXT NOT NULL
-            )
-        ''')
-        conn.commit()
-        conn.close()
-        print("Database initialized successfully.")
-
-# Call the database initialization function
-initialize_database()
-
 # User Registration
 @app.route("/signup", methods=["POST"])
 def signup():
